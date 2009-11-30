@@ -12,7 +12,7 @@
       </gizmo_options>
       <runprofile version="5">
         <args></args>
-        <rundir>/home/31596624892/NetBeansProjects/MinusCube/resources</rundir>
+        <rundir>./resources</rundir>
         <buildfirst>true</buildfirst>
         <console-type>0</console-type>
         <terminal-type>0</terminal-type>
