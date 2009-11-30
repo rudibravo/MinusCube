@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="62">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Arquivos de cabeçalho"
+                   projectFiles="true">
+      <itemPath>header/Basic.h</itemPath>
+      <itemPath>header/Game.h</itemPath>
+      <itemPath>header/Piece.h</itemPath>
+      <itemPath>header/Side.h</itemPath>
+      <itemPath>header/SideVerifier.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Arquivos de código-fonte"
+                   projectFiles="true">
+      <itemPath>src/Basic.cpp</itemPath>
+      <itemPath>src/Game.cpp</itemPath>
+      <itemPath>src/Piece.cpp</itemPath>
+      <itemPath>src/Side.cpp</itemPath>
+      <itemPath>src/SideVerifier.cpp</itemPath>
+      <itemPath>src/main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Arquivos de recurso"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Arquivos importantes"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>/usr/include/OGRE</pElem>
+            <pElem>/usr/include/OIS</pElem>
+            <pElem>/usr/include</pElem>
+            <pElem>./header</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>OGRE_GUI_GLX</Elem>
+            <Elem>OGRE_CONFIG_LITTLE_ENDIAN</Elem>
+          </preprocessorList>
+        </ccTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/lib</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>OIS</linkerLibLibItem>
+            <linkerLibLibItem>OgreMain</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+    </conf>
+  </confs>
+</configurationDescriptor>
