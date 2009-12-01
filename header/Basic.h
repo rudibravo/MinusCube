@@ -21,18 +21,20 @@
 #include <OgreConfigFile.h>
 #include <OgreStringConverter.h>
 #include <OgreMaterialManager.h>
+#include <OgreWindowEventUtilities.h>
 
 #include <OISEvents.h>
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
-class Basic : public Ogre::Singleton<Basic>, OIS::KeyListener, OIS::MouseListener {
+class Basic : public Ogre::Singleton<Basic>, OIS::KeyListener, OIS::MouseListener, Ogre::WindowEventListener {
 public:
     Basic();
     ~Basic();
 
     void initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener = 0, OIS::MouseListener *pMouseListener = 0);
+    void shutdownOgre();
     void updateOgre(double timeSinceLastFrame);
     void updateStats();
     void moveCamera();
@@ -48,6 +50,8 @@ public:
     bool mouseMoved(const OIS::MouseEvent &evt);
     bool mousePressed(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
     bool mouseReleased(const OIS::MouseEvent &evt, OIS::MouseButtonID id);
+
+    void windowClosed(Ogre::RenderWindow* rw);
 
     Ogre::MovableObject* queryClosestObject(Ogre::Ray* ray);
 

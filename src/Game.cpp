@@ -14,6 +14,12 @@
 
 #include <OgreRay.h>
 
+#include <OgreCEGUIRenderer.h>
+#include <CEGUISystem.h>
+#include <CEGUIWindowManager.h>
+#include <CEGUIWindow.h>
+
+
 Game::Game()
 {
     m_pCubeNode = 0;
@@ -174,6 +180,23 @@ void Game::setupGameScene()
     sv5->mGroup->translate(Ogre::Vector3(0, -3, 0));
 
     scramble();
+
+//    CEGUI::OgreCEGUIRenderer* mOgreCeguiRenderer = new CEGUI::OgreCEGUIRenderer(Basic::getSingletonPtr()->m_pRenderWnd, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, Basic::getSingletonPtr()->m_pSceneMgr);
+//    CEGUI::System* mSystem = new CEGUI::System(mOgreCeguiRenderer);
+//    mSystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
+//    mSystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
+//
+//
+//    CEGUI::WindowManager *win = CEGUI::WindowManager::getSingletonPtr();
+//    CEGUI::Window *sheet = win->createWindow("DefaultGUISheet", "CEGUIDemo/Sheet");
+//    CEGUI::Window *quit = win->createWindow("TaharezLook/Button", "CEGUIDemo/QuitButton");
+//    quit->setText("Quit");
+//    quit->setSize(CEGUI::UVector2(CEGUI::UDim(0.15, 0), CEGUI::UDim(0.05, 0)));
+//    sheet->addChildWindow(quit);
+//    mSystem->setGUISheet(sheet);
+
+
+
 }
 
 bool Game::isFinishedState()
@@ -299,9 +322,8 @@ void Game::runGame()
     {
         if (Basic::getSingletonPtr()->m_pRenderWnd->isClosed())m_bShutdown = true;
 
-#if OGRE_PLATFORM == OGRE_PLATFORM_WIN32
         Ogre::WindowEventUtilities::messagePump();
-#endif
+        
         if (Basic::getSingletonPtr()->m_pRenderWnd->isActive())
         {
             startTime = Basic::getSingletonPtr()->m_pTimer->getMillisecondsCPU();
@@ -309,10 +331,6 @@ void Game::runGame()
             Basic::getSingletonPtr()->m_pKeyboard->capture();
             Basic::getSingletonPtr()->m_pMouse->capture();
 
-            Basic::getSingletonPtr()->updateOgre(timeSinceLastFrame);
-            Basic::getSingletonPtr()->m_pRoot->renderOneFrame();
-
-            timeSinceLastFrame = Basic::getSingletonPtr()->m_pTimer->getMillisecondsCPU() - startTime;
             for (uint i = 0; i < m_pieces.size(); i++)
             {
                 if (m_pieces[i])
@@ -320,6 +338,11 @@ void Game::runGame()
                     m_pieces[i]->step(timeSinceLastFrame);
                 }
             }
+
+            Basic::getSingletonPtr()->updateOgre(timeSinceLastFrame);
+            Basic::getSingletonPtr()->m_pRoot->renderOneFrame();
+
+            timeSinceLastFrame = Basic::getSingletonPtr()->m_pTimer->getMillisecondsCPU() - startTime;
         }
         else
         {

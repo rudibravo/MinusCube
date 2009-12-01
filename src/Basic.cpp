@@ -12,11 +12,18 @@
 #include <OgreFrameListener.h>
 #include <OgreSceneQuery.h>
 #include <OgreSubMesh.h>
+#include <OgreWindowEventUtilities.h>
 
 using namespace Ogre;
 
-
 template<> Basic* Ogre::Singleton<class Basic>::ms_Singleton = 0;
+
+void Basic::windowClosed(Ogre::RenderWindow* rw)
+{
+    //std::cout << "BBBB" << std::endl;
+    m_pMouse = 0;
+    m_bShutDownOgre = true;
+}
 
 Basic::Basic()
 {
@@ -95,6 +102,8 @@ void Basic::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OIS:
     m_pMouse->getMouseState().height = m_pRenderWnd->getHeight();
     m_pMouse->getMouseState().width = m_pRenderWnd->getWidth();
 
+    Ogre::WindowEventUtilities::addWindowEventListener(m_pRenderWnd, this);
+
     if (pKeyListener == 0)
         m_pKeyboard->setEventCallback(this);
     else
@@ -138,7 +147,8 @@ void Basic::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OIS:
 Basic::~Basic()
 {
     delete m_pKeyboard;
-    delete m_pMouse;
+    if (m_pMouse)
+        delete m_pMouse;
 
     OIS::InputManager::destroyInputSystem(m_pInputMgr);
 

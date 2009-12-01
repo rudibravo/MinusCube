@@ -24,6 +24,7 @@ int main(int argc, char **argv)
     {
         Game game;
         game.startGame();
+        std::cout << "?" << std::endl;
     }
     catch (std::exception& e)
     {
