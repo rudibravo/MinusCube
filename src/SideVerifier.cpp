@@ -61,11 +61,7 @@ bool SideVerifier::verify()
     }
     else
     {
-        std::cout << "ERROR" << std::endl;
-        std::cout << closestObject0 << std::endl;
-        std::cout << closestObject1 << std::endl;
-        std::cout << closestObject2 << std::endl;
-        std::cout << closestObject3 << std::endl;
+        Basic::getSingletonPtr()->m_pLog->logMessage("Error on side verifier. One of the sides is null.");
     }
     return false;
 }
