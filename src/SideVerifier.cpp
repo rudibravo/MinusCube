@@ -61,7 +61,7 @@ bool SideVerifier::verify()
     }
     else
     {
-        Basic::getSingletonPtr()->m_pLog->logMessage("Error on side verifier. One of the sides is null.");
+        Basic::getSingletonPtr()->mLog->logMessage("Error on side verifier. One of the sides is null.");
     }
     return false;
 }

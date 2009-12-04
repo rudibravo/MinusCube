@@ -14,6 +14,8 @@
 #include <OgreSubMesh.h>
 #include <OgreWindowEventUtilities.h>
 
+#include <CEGUISchemeManager.h>
+
 using namespace Ogre;
 
 template<> Basic* Ogre::Singleton<class Basic>::ms_Singleton = 0;
@@ -21,7 +23,7 @@ template<> Basic* Ogre::Singleton<class Basic>::ms_Singleton = 0;
 void Basic::windowClosed(Ogre::RenderWindow* rw)
 {
     //std::cout << "BBBB" << std::endl;
-    m_pMouse = 0;
+    mMouse = 0;
     m_bShutDownOgre = true;
 }
 
@@ -33,52 +35,52 @@ Basic::Basic()
     m_bShutDownOgre = false;
     m_iNumScreenShots = 0;
 
-    m_pRoot = 0;
-    m_pSceneMgr = 0;
-    m_pRenderWnd = 0;
-    m_pCamera = 0;
-    m_pViewport = 0;
-    m_pLog = 0;
-    m_pTimer = 0;
+    mRoot = 0;
+    mSceneMgr = 0;
+    mRenderWnd = 0;
+    mCamera = 0;
+    mViewport = 0;
+    mLog = 0;
+    mTimer = 0;
 
-    m_pInputMgr = 0;
-    m_pKeyboard = 0;
-    m_pMouse = 0;
+    mInputMgr = 0;
+    mKeyboard = 0;
+    mMouse = 0;
 
-    m_pDebugOverlay = 0;
-    m_pInfoOverlay = 0;
+    mDebugOverlay = 0;
+    mInfoOverlay = 0;
 }
 
 void Basic::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OIS::MouseListener *pMouseListener)
 {
     new Ogre::LogManager();
 
-    m_pLog = Ogre::LogManager::getSingleton().createLog("OgreLogfile.log", true, true, false);
-    //m_pLog->setDebugOutputEnabled(true);
+    mLog = Ogre::LogManager::getSingleton().createLog("OgreLogfile.log", true, true, false);
+    //mLog->setDebugOutputEnabled(true);
 
-    m_pRoot = new Ogre::Root();
+    mRoot = new Ogre::Root();
 
-    m_pRoot->showConfigDialog();
-    m_pRenderWnd = m_pRoot->initialise(true, wndTitle);
+    mRoot->showConfigDialog();
+    mRenderWnd = mRoot->initialise(true, wndTitle);
 
-    m_pSceneMgr = m_pRoot->createSceneManager(ST_GENERIC, "SceneManager");
-    m_pSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+    mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "SceneManager");
+    mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
-    m_pCamera = m_pSceneMgr->createCamera("Camera");
-    m_pCamera->setPosition(Vector3(0, 0, 15));
-    m_pCamera->lookAt(Vector3(0, 0, 0));
-    m_pCamera->setNearClipDistance(1);
+    mCamera = mSceneMgr->createCamera("Camera");
+    mCamera->setPosition(Vector3(0, 0, 15));
+    mCamera->lookAt(Vector3(0, 0, 0));
+    mCamera->setNearClipDistance(1);
 
-    m_pViewport = m_pRenderWnd->addViewport(m_pCamera);
-    m_pViewport->setBackgroundColour(ColourValue(0.8, 0.7, 0.6, 1.0));
+    mViewport = mRenderWnd->addViewport(mCamera);
+    mViewport->setBackgroundColour(ColourValue(0.8, 0.7, 0.6, 1.0));
 
-    m_pCamera->setAspectRatio(Real(m_pViewport->getActualWidth()) / Real(m_pViewport->getActualHeight()));
+    mCamera->setAspectRatio(Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
 
-    m_pViewport->setCamera(m_pCamera);
+    mViewport->setCamera(mCamera);
 
     unsigned long hWnd = 0;
     OIS::ParamList paramList;
-    m_pRenderWnd->getCustomAttribute("WINDOW", &hWnd);
+    mRenderWnd->getCustomAttribute("WINDOW", &hWnd);
 
     paramList.insert(OIS::ParamList::value_type("WINDOW", Ogre::StringConverter::toString(hWnd)));
 
@@ -94,25 +96,25 @@ void Basic::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OIS:
     paramList.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
 #endif
 
-    m_pInputMgr = OIS::InputManager::createInputSystem(paramList);
+    mInputMgr = OIS::InputManager::createInputSystem(paramList);
 
-    m_pKeyboard = static_cast<OIS::Keyboard*> (m_pInputMgr->createInputObject(OIS::OISKeyboard, true));
-    m_pMouse = static_cast<OIS::Mouse*> (m_pInputMgr->createInputObject(OIS::OISMouse, true));
+    mKeyboard = static_cast<OIS::Keyboard*> (mInputMgr->createInputObject(OIS::OISKeyboard, true));
+    mMouse = static_cast<OIS::Mouse*> (mInputMgr->createInputObject(OIS::OISMouse, true));
 
-    m_pMouse->getMouseState().height = m_pRenderWnd->getHeight();
-    m_pMouse->getMouseState().width = m_pRenderWnd->getWidth();
+    mMouse->getMouseState().height = mRenderWnd->getHeight();
+    mMouse->getMouseState().width = mRenderWnd->getWidth();
 
-    Ogre::WindowEventUtilities::addWindowEventListener(m_pRenderWnd, this);
+    Ogre::WindowEventUtilities::addWindowEventListener(mRenderWnd, this);
 
     if (pKeyListener == 0)
-        m_pKeyboard->setEventCallback(this);
+        mKeyboard->setEventCallback(this);
     else
-        m_pKeyboard->setEventCallback(pKeyListener);
+        mKeyboard->setEventCallback(pKeyListener);
 
     if (pMouseListener == 0)
-        m_pMouse->setEventCallback(this);
+        mMouse->setEventCallback(this);
     else
-        m_pMouse->setEventCallback(pMouseListener);
+        mMouse->setEventCallback(pMouseListener);
 
     Ogre::String secName, typeName, archName;
     Ogre::ConfigFile cf;
@@ -135,73 +137,84 @@ void Basic::initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener, OIS:
     Ogre::MaterialManager::getSingleton().setDefaultTextureFiltering(Ogre::TFO_ANISOTROPIC);
     Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
-    m_pTimer = new Ogre::Timer();
-    m_pTimer->reset();
+    mTimer = new Ogre::Timer();
+    mTimer->reset();
 
-    m_pDebugOverlay = OverlayManager::getSingleton().getByName("Core/DebugOverlay");
-    //m_pDebugOverlay->show();
+    mDebugOverlay = OverlayManager::getSingleton().getByName("Core/DebugOverlay");
+    //mDebugOverlay->show();
 
-    m_pRenderWnd->setActive(true);
+    mRenderWnd->setActive(true);
+}
+
+void Basic::initCEGUI()
+{
+    mOgreCeguiRenderer = new CEGUI::OgreCEGUIRenderer(Basic::getSingletonPtr()->mRenderWnd, Ogre::RENDER_QUEUE_OVERLAY, false, 3000, Basic::getSingletonPtr()->mSceneMgr);
+    mSystem = new CEGUI::System(mOgreCeguiRenderer);
+
+    CEGUI::SchemeManager::getSingleton().loadScheme((CEGUI::utf8*)"TaharezLookSkin.scheme");
+
+    mSystem->setDefaultMouseCursor((CEGUI::utf8*)"TaharezLook", (CEGUI::utf8*)"MouseArrow");
+    mSystem->setDefaultFont((CEGUI::utf8*)"BlueHighway-12");
 }
 
 Basic::~Basic()
 {
-    delete m_pKeyboard;
-    if (m_pMouse)
-        delete m_pMouse;
+    delete mKeyboard;
+    if (mMouse)
+        delete mMouse;
 
-    OIS::InputManager::destroyInputSystem(m_pInputMgr);
+    OIS::InputManager::destroyInputSystem(mInputMgr);
 
-    delete m_pRoot;
+    delete mRoot;
 }
 
 bool Basic::keyPressed(const OIS::KeyEvent &keyEventRef)
 {
-    m_pLog->logMessage("Basic::keyPressed");
+    mLog->logMessage("Basic::keyPressed");
 
-    if (m_pKeyboard->isKeyDown(OIS::KC_ESCAPE))
+    if (mKeyboard->isKeyDown(OIS::KC_ESCAPE))
     {
         m_bShutDownOgre = true;
         return true;
     }
 
-    if (m_pKeyboard->isKeyDown(OIS::KC_SYSRQ))
+    if (mKeyboard->isKeyDown(OIS::KC_SYSRQ))
     {
         std::ostringstream ss;
         ss << "screenshot_" << ++m_iNumScreenShots << ".png";
-        m_pRenderWnd->writeContentsToFile(ss.str());
+        mRenderWnd->writeContentsToFile(ss.str());
         return true;
     }
 
-    if (m_pKeyboard->isKeyDown(OIS::KC_M))
+    if (mKeyboard->isKeyDown(OIS::KC_M))
     {
         static int mode = 0;
 
         if (mode == 2)
         {
-            m_pCamera->setPolygonMode(PM_SOLID);
+            mCamera->setPolygonMode(PM_SOLID);
             mode = 0;
         }
         else if (mode == 0)
         {
-            m_pCamera->setPolygonMode(PM_WIREFRAME);
+            mCamera->setPolygonMode(PM_WIREFRAME);
             mode = 1;
         }
         else if (mode == 1)
         {
-            m_pCamera->setPolygonMode(PM_POINTS);
+            mCamera->setPolygonMode(PM_POINTS);
             mode = 2;
         }
     }
 
-    if (m_pKeyboard->isKeyDown(OIS::KC_O))
+    if (mKeyboard->isKeyDown(OIS::KC_O))
     {
-        if (m_pDebugOverlay)
+        if (mDebugOverlay)
         {
-            if (!m_pDebugOverlay->isVisible())
-                m_pDebugOverlay->show();
+            if (!mDebugOverlay->isVisible())
+                mDebugOverlay->show();
             else
-                m_pDebugOverlay->hide();
+                mDebugOverlay->hide();
         }
     }
 
@@ -215,8 +228,8 @@ bool Basic::keyReleased(const OIS::KeyEvent &keyEventRef)
 
 bool Basic::mouseMoved(const OIS::MouseEvent &evt)
 {
-    //m_pCamera->yaw(Degree(evt.state.X.rel * -0.1));
-    //m_pCamera->pitch(Degree(evt.state.Y.rel * -0.1));
+    //mCamera->yaw(Degree(evt.state.X.rel * -0.1));
+    //mCamera->pitch(Degree(evt.state.Y.rel * -0.1));
 
     return true;
 }
@@ -258,7 +271,7 @@ void Basic::updateStats()
     OverlayElement* guiBest = OverlayManager::getSingleton().getOverlayElement("Core/BestFps");
     OverlayElement* guiWorst = OverlayManager::getSingleton().getOverlayElement("Core/WorstFps");
 
-    const RenderTarget::FrameStats& stats = m_pRenderWnd->getStatistics();
+    const RenderTarget::FrameStats& stats = mRenderWnd->getStatistics();
     guiAvg->setCaption(avgFps + StringConverter::toString(stats.avgFPS));
     guiCurr->setCaption(currFps + StringConverter::toString(stats.lastFPS));
     guiBest->setCaption(bestFps + StringConverter::toString(stats.bestFPS)
@@ -278,56 +291,56 @@ void Basic::updateStats()
 
 void Basic::moveCamera()
 {
-    if (m_pKeyboard->isKeyDown(OIS::KC_LSHIFT)) m_pCamera->moveRelative(m_TranslateVector);
-    m_pCamera->moveRelative(m_TranslateVector / 10);
+    if (mKeyboard->isKeyDown(OIS::KC_LSHIFT)) mCamera->moveRelative(m_TranslateVector);
+    mCamera->moveRelative(m_TranslateVector / 10);
 }
 
 void Basic::getInput()
 {
-    /*if(m_pKeyboard->isKeyDown(OIS::KC_A))
+    /*if(mKeyboard->isKeyDown(OIS::KC_A))
     {
             m_TranslateVector.x = -m_MoveScale;
     }
 
-    if(m_pKeyboard->isKeyDown(OIS::KC_D))
+    if(mKeyboard->isKeyDown(OIS::KC_D))
     {
             m_TranslateVector.x = m_MoveScale;
     }
 
-    if(m_pKeyboard->isKeyDown(OIS::KC_W))
+    if(mKeyboard->isKeyDown(OIS::KC_W))
     {
             m_TranslateVector.z = -m_MoveScale;
     }
 
-    if(m_pKeyboard->isKeyDown(OIS::KC_S))
+    if(mKeyboard->isKeyDown(OIS::KC_S))
     {
             m_TranslateVector.z = m_MoveScale;
     }
 
-    if(m_pKeyboard->isKeyDown(OIS::KC_LEFT))
+    if(mKeyboard->isKeyDown(OIS::KC_LEFT))
     {
-            m_pCamera->yaw(m_RotScale);
+            mCamera->yaw(m_RotScale);
     }
 
-    if(m_pKeyboard->isKeyDown(OIS::KC_RIGHT))
+    if(mKeyboard->isKeyDown(OIS::KC_RIGHT))
     {
-            m_pCamera->yaw(-m_RotScale);
+            mCamera->yaw(-m_RotScale);
     }
 
-    if(m_pKeyboard->isKeyDown(OIS::KC_UP))
+    if(mKeyboard->isKeyDown(OIS::KC_UP))
     {
-            m_pCamera->pitch(m_RotScale);
+            mCamera->pitch(m_RotScale);
     }
 
-    if(m_pKeyboard->isKeyDown(OIS::KC_DOWN))
+    if(mKeyboard->isKeyDown(OIS::KC_DOWN))
     {
-            m_pCamera->pitch(-m_RotScale);
+            mCamera->pitch(-m_RotScale);
     }*/
 }
 
 Ogre::MovableObject* Basic::queryClosestObject(Ogre::Ray* ray)
 {
-    Ogre::RaySceneQuery* raySceneQuery = Basic::getSingletonPtr()->m_pSceneMgr->createRayQuery(*ray);
+    Ogre::RaySceneQuery* raySceneQuery = Basic::getSingletonPtr()->mSceneMgr->createRayQuery(*ray);
 
     raySceneQuery->setSortByDistance(true);
     raySceneQuery->execute();

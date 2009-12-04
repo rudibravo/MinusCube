@@ -52,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib -lOIS -lOgreMain
+LDLIBSOPTIONS=-L/usr/lib -lOIS -lCEGUIOgreRenderer -lOgreMain -lCEGUIBase
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -65,32 +65,32 @@ dist/Debug/GNU-Linux-x86/minuscube: ${OBJECTFILES}
 ${OBJECTDIR}/src/Game.o: nbproject/Makefile-${CND_CONF}.mk src/Game.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Game.o src/Game.cpp
+	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -I/usr/include/CEGUI -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Game.o src/Game.cpp
 
 ${OBJECTDIR}/src/SideVerifier.o: nbproject/Makefile-${CND_CONF}.mk src/SideVerifier.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/SideVerifier.o src/SideVerifier.cpp
+	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -I/usr/include/CEGUI -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/SideVerifier.o src/SideVerifier.cpp
 
 ${OBJECTDIR}/src/main.o: nbproject/Makefile-${CND_CONF}.mk src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/main.o src/main.cpp
+	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -I/usr/include/CEGUI -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/main.o src/main.cpp
 
 ${OBJECTDIR}/src/Side.o: nbproject/Makefile-${CND_CONF}.mk src/Side.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Side.o src/Side.cpp
+	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -I/usr/include/CEGUI -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Side.o src/Side.cpp
 
 ${OBJECTDIR}/src/Piece.o: nbproject/Makefile-${CND_CONF}.mk src/Piece.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Piece.o src/Piece.cpp
+	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -I/usr/include/CEGUI -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Piece.o src/Piece.cpp
 
 ${OBJECTDIR}/src/Basic.o: nbproject/Makefile-${CND_CONF}.mk src/Basic.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Basic.o src/Basic.cpp
+	$(COMPILE.cc) -g -DOGRE_GUI_GLX -DOGRE_CONFIG_LITTLE_ENDIAN -I/usr/include/OGRE -I/usr/include/OIS -I/usr/include -I./header -I/usr/include/CEGUI -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Basic.o src/Basic.cpp
 
 # Subprojects
 .build-subprojects:

@@ -28,12 +28,16 @@
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
+#include <OgreCEGUIRenderer.h>
+#include <CEGUISystem.h>
+
 class Basic : public Ogre::Singleton<Basic>, OIS::KeyListener, OIS::MouseListener, Ogre::WindowEventListener {
 public:
     Basic();
     ~Basic();
 
     void initOgre(Ogre::String wndTitle, OIS::KeyListener *pKeyListener = 0, OIS::MouseListener *pMouseListener = 0);
+    void initCEGUI();
     void shutdownOgre();
     void updateOgre(double timeSinceLastFrame);
     void updateStats();
@@ -65,24 +69,27 @@ public:
             const Ogre::Quaternion &orient,
             const Ogre::Vector3 &scale);
 
-    Ogre::Root* m_pRoot;
-    Ogre::SceneManager* m_pSceneMgr;
-    Ogre::RenderWindow* m_pRenderWnd;
-    Ogre::Camera* m_pCamera;
-    Ogre::Viewport* m_pViewport;
-    Ogre::Log* m_pLog;
-    Ogre::Timer* m_pTimer;
+    Ogre::Root* mRoot;
+    Ogre::SceneManager* mSceneMgr;
+    Ogre::RenderWindow* mRenderWnd;
+    Ogre::Camera* mCamera;
+    Ogre::Viewport* mViewport;
+    Ogre::Log* mLog;
+    Ogre::Timer* mTimer;
 
-    OIS::InputManager* m_pInputMgr;
-    OIS::Keyboard* m_pKeyboard;
-    OIS::Mouse* m_pMouse;
+    OIS::InputManager* mInputMgr;
+    OIS::Keyboard* mKeyboard;
+    OIS::Mouse* mMouse;
+
+    CEGUI::OgreCEGUIRenderer* mOgreCeguiRenderer;
+    CEGUI::System* mSystem;
 
 private:
     Basic(const Basic&);
     Basic & operator=(const Basic&);
 
-    Ogre::Overlay* m_pDebugOverlay;
-    Ogre::Overlay* m_pInfoOverlay;
+    Ogre::Overlay* mDebugOverlay;
+    Ogre::Overlay* mInfoOverlay;
     int m_iNumScreenShots;
 
     bool m_bShutDownOgre;

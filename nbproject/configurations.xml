@@ -45,6 +45,7 @@
             <pElem>/usr/include/OIS</pElem>
             <pElem>/usr/include</pElem>
             <pElem>./header</pElem>
+            <pElem>/usr/include/CEGUI</pElem>
           </incDir>
           <preprocessorList>
             <Elem>OGRE_GUI_GLX</Elem>
@@ -57,7 +58,9 @@
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>OIS</linkerLibLibItem>
+            <linkerLibLibItem>CEGUIOgreRenderer</linkerLibLibItem>
             <linkerLibLibItem>OgreMain</linkerLibLibItem>
+            <linkerLibLibItem>CEGUIBase</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

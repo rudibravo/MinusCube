@@ -43,7 +43,7 @@ m_cubeNode(cubeNode)
         entity = "redplane";
         break;
     }
-    m_planeEntity = Basic::getSingletonPtr()->m_pSceneMgr->createEntity(name, entity);
+    m_planeEntity = Basic::getSingletonPtr()->mSceneMgr->createEntity(name, entity);
     m_planeEntity->setUserObject(new ColorProperty(color));
     m_planeNode = m_cubeNode->createChildSceneNode(name);
     m_planeNode->attachObject(m_planeEntity);
